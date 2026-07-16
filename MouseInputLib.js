@@ -12,6 +12,8 @@ export default class MouseInput{
 	#buttonStateMap;
 	#pressedTimeMap;
 	#hasPreventEvent;
+	#mouseX;
+	#mouseY;
 
 	/**
 	 * 要素のキーイベントを監視します。
@@ -58,6 +60,11 @@ export default class MouseInput{
 				};
 			}
 			this.#buttonStateMap.set(event.button, state);
+		});
+		targetElement.addEventListener('mousemove', event => {
+			const clientRect = targetElement.getBoundingClientRect();
+			this.#mouseX = event.clientX - clientRect.left;
+			this.#mouseY = event.clientY - clientRect.top;
 		});
 	}
 
@@ -133,6 +140,22 @@ export default class MouseInput{
 	 */
 	isReleaseEdge(button){
 		return (this.#buttonStateMap.has(button) && this.#buttonStateMap.get(button).releaseEdge);
+	}
+
+	/**
+	 * 監視対象の要素の左上を基準としたマウスのX座標を返します。
+	 * @return {number} マウスのX座標
+	 */
+	getMouseX(){
+		return this.#mouseX;
+	}
+
+	/**
+	 * 監視対象の要素の左上を基準としたマウスのY座標を返します。
+	 * @return {number} マウスのY座標
+	 */
+	getMouseY(){
+		return this.#mouseY;
 	}
 
 	/**
