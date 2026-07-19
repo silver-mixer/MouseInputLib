@@ -24,6 +24,8 @@ export default class MouseInput{
 		this.#buttonStateMap = new Map();
 		this.#pressedTimeMap = new Map();
 		this.#hasPreventEvent = false;
+		this.#mouseX = 0;
+		this.#mouseY = 0;
 
 		targetElement.addEventListener('mousedown', event => {
 			if(this.#hasPreventEvent){
